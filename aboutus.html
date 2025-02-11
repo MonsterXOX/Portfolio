@@ -1,0 +1,516 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>About Us - Gen-T</title>
+  <style>
+    /* General Reset */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: #1a1a1a;
+      color: #fff;
+      overflow-x: hidden;
+    }
+
+    /* Updated NAVBAR STYLES */
+    .navbar {
+      position: fixed;
+      top: 0;
+      width: 100%;
+      background: rgba(26, 26, 26, 0.9);
+      color: #fff;
+      z-index: 1000;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+      transition: background 0.3s ease-in-out;
+    }
+
+    .navbar-container {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 10px 20px;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .logo {
+      font-size: 1.5rem;
+      font-weight: bold;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      color: #fff;
+      text-decoration: none;
+    }
+
+    .navbar-links {
+      display: flex;
+      gap: 20px;
+    }
+
+    .nav-link {
+      text-decoration: none;
+      color: #fff;
+      font-size: 1rem;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .nav-link::before {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      height: 2px;
+      background: #6a11cb;
+      transform: scaleX(0);
+      transform-origin: right;
+      transition: transform 0.3s ease-in-out;
+    }
+
+    .nav-link:hover::before {
+      transform: scaleX(1);
+      transform-origin: left;
+    }
+
+    .hamburger {
+      display: none;
+      flex-direction: column;
+      gap: 5px;
+      background: none;
+      border: none;
+      cursor: pointer;
+    }
+
+    .hamburger .line {
+      width: 25px;
+      height: 3px;
+      background: #fff;
+      border-radius: 5px;
+      transition: all 0.3s ease-in-out;
+    }
+
+    .navbar.active .navbar-links {
+      display: flex;
+      flex-direction: column;
+      background: rgba(0, 0, 0, 0.9);
+      position: absolute;
+      top: 100%;
+      left: 0;
+      width: 100%;
+      padding: 10px 0;
+    }
+
+    .navbar.active .nav-link {
+      padding: 10px 20px;
+      text-align: center;
+    }
+
+    /* Animation for Hamburger Menu */
+    .hamburger.active .line:nth-child(1) {
+      transform: rotate(45deg) translate(5px, 5px);
+    }
+
+    .hamburger.active .line:nth-child(2) {
+      opacity: 0;
+    }
+
+    .hamburger.active .line:nth-child(3) {
+      transform: rotate(-45deg) translate(5px, -5px);
+    }
+
+    /* Responsive Navbar */
+    @media (max-width: 768px) {
+      .navbar-links {
+          display: none;
+      }
+
+      .hamburger {
+          display: flex;
+      }
+
+      .navbar.active .navbar-links {
+          display: flex;
+      }
+
+      .navbar.active .line:nth-child(1) {
+          transform: rotate(45deg) translate(5px, 5px);
+      }
+
+      .navbar.active .line:nth-child(2) {
+          opacity: 0;
+      }
+
+      .navbar.active .line:nth-child(3) {
+          transform: rotate(-45deg) translate(5px, -5px);
+      }
+    }
+
+    .hero + * {
+      margin-top: 0;
+      padding-top: 0;
+    }
+    
+    /* Hero Section */
+    .hero {
+      height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+    canvas {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: -1;
+    }
+    .hero-content {
+      z-index: 2;
+      position: relative;
+      opacity: 0;
+      transform: translateY(50px);
+      animation: fadeInUp 3s ease forwards 5s; /* Delay to allow entrance animation */
+      padding: 0 10px;
+    }
+    .hero h1 {
+      font-size: 3rem;
+      margin-bottom: 20px;
+      text-transform: uppercase;
+    }
+    .hero p {
+      font-size: 1.2rem;
+    }
+    @media (max-width: 768px) {
+      .hero h1 {
+        font-size: 2.5rem;
+      }
+      .hero p {
+        font-size: 1rem;
+      }
+    }
+    @media (max-width: 480px) {
+      .hero h1 {
+        font-size: 2rem;
+      }
+      .hero p {
+        font-size: 0.9rem;
+      }
+    }
+
+    @keyframes fadeInUp {
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    /* Footer */
+    footer {
+      background: #333;
+      color: #fff;
+      text-align: center;
+      padding: 30px 20px;
+    }
+    @media (max-width: 480px) {
+      footer {
+        padding: 20px 10px;
+        font-size: 0.9rem;
+      }
+    }
+
+    /* About Us Section */
+  .about-us {
+    background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
+    color: #fff;
+    padding: 80px 20px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .about-us::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(circle, rgba(255, 255, 255, 0.1), rgba(0, 0, 0, 0));
+    animation: floatGlow 6s infinite alternate ease-in-out;
+    z-index: -1;
+  }
+
+  @keyframes floatGlow {
+    0% {
+      transform: translate(-50%, -50%) scale(1);
+    }
+    50% {
+      transform: translate(-50%, -50%) scale(1.1);
+    }
+    100% {
+      transform: translate(-50%, -50%) scale(1);
+    }
+  }
+
+  .container {
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+
+  .section-title {
+    font-size: 2.5rem;
+    margin-bottom: 40px;
+    position: relative;
+    display: inline-block;
+    color: #f0f0f0;
+  }
+
+  .section-title::after {
+    content: '';
+    position: absolute;
+    bottom: -10px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 50px;
+    height: 3px;
+    background: #6a11cb;
+    animation: underlineExpand 1s ease forwards;
+  }
+
+  @keyframes underlineExpand {
+    from {
+      width: 0;
+    }
+    to {
+      width: 50px;
+    }
+  }
+
+  .about-text {
+    font-size: 1.2rem;
+    line-height: 1.8;
+    margin-bottom: 30px;
+    color: #ddd;
+  }
+
+  .values {
+    margin-top: 50px;
+  }
+
+  .values-title {
+    font-size: 2rem;
+    margin-bottom: 20px;
+    color: #fff;
+  }
+
+  .values-list {
+    list-style: none;
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+  }
+
+  .values-list li {
+    font-size: 1.5rem;
+    background: rgba(255, 255, 255, 0.1);
+    padding: 15px 30px;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    transition: transform 0.3s ease, background 0.3s ease;
+    cursor: pointer;
+    animation: idleFloat 4s ease-in-out infinite;
+  }
+
+  @keyframes idleFloat {
+    0%, 100% {
+      transform: translateY(0);
+    }
+    50% {
+      transform: translateY(-10px);
+    }
+  }
+
+  .values-list li:hover {
+    transform: scale(1.1);
+    background: rgba(255, 255, 255, 0.2);
+  }
+
+  @media (max-width: 768px) {
+    .values-list {
+      flex-direction: column;
+      gap: 15px;
+    }
+  }
+  </style>
+</head>
+<body>
+  <!-- Navbar -->
+  <nav class="navbar">
+    <div class="navbar-container">
+      <a href="#" class="logo">Gen-T AI Solutions</a>
+      <button class="hamburger" aria-label="Toggle navigation">
+        <span class="line"></span>
+        <span class="line"></span>
+        <span class="line"></span>
+      </button>
+      <div class="navbar-links">
+        <a href="index.html" class="nav-link">Home</a>
+        <a href="aboutus.html" class="nav-link">About Us</a>
+        <a href="projects.html" class="nav-link">Projects</a>
+        <a href="contact.html" class="nav-link">Contact</a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Hero Section -->
+  <div class="hero">
+    <div class="hero-content">
+      <h1>About Us</h1>
+      <p>Discover the vision, mission, and journey of Gen-T. Driving innovation, one project at a time.</p>
+    </div>
+    <canvas id="bg"></canvas>
+  </div>
+
+  <!-- New Content Section -->
+  <section class="about-us">
+    <div class="container" data-aos="fade-up" data-aos-duration="1200">
+      <h2 class="section-title">Who We Are</h2>
+      <p class="about-text">
+        At Gen-T AI Solutions, we are committed to deliver! And believe in building long-term relationships with our clients to contribute to their success. 
+        We specialize in AI services and are always excited to think out of the box, cost and time-efficient solutions.
+      </p>
+      <p class="about-text">
+        Innovation is the name of the game at the floor. We encourage originality in our teams to come up with a solution at super agile speed. Integrity 
+        is at the helm of our dealings with clients externally and with teams internally.
+      </p>
+      <div class="values">
+        <h3 class="values-title">We strongly believe in:</h3>
+        <ul class="values-list">
+          <li data-aos="zoom-in" data-aos-delay="100">• Integrity</li>
+          <li data-aos="zoom-in" data-aos-delay="200">• Innovation</li>
+          <li data-aos="zoom-in" data-aos-delay="300">• Originality</li>
+          <li data-aos="zoom-in" data-aos-delay="400">• Agility</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    <p>&copy; 2024 Gen-T. All Rights Reserved.</p>
+  </footer>
+
+  <!-- AOS Animation JS -->
+  <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+  <!-- Technology Node Animation with Three.js -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+  <script>
+    // Scene, Camera, Renderer
+    const scene = new THREE.Scene();
+    const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+    const renderer = new THREE.WebGLRenderer({ canvas: document.querySelector('#bg') });
+    renderer.setSize(window.innerWidth, window.innerHeight);
+    renderer.setPixelRatio(window.devicePixelRatio);
+
+    // Node System
+    const nodes = [];
+    const nodeMaterial = new THREE.MeshBasicMaterial({ color: 0xffffff });
+    const nodeGeometry = new THREE.SphereGeometry(0.2, 16, 16);
+
+    for (let i = 0; i < 50; i++) {
+      const node = new THREE.Mesh(nodeGeometry, nodeMaterial);
+      node.position.set(
+        (Math.random() - 0.5) * 50,
+        (Math.random() - 0.5) * 30,
+        (Math.random() - 0.5) * 50
+      );
+      nodes.push(node);
+      scene.add(node);
+    }
+
+    // Line Connections
+    const lineMaterial = new THREE.LineBasicMaterial({ color: 0xffffff, opacity: 0.5, transparent: true });
+    const lineGeometry = new THREE.BufferGeometry();
+
+    function connectNodes() {
+      const positions = [];
+      for (let i = 0; i < nodes.length; i++) {
+        for (let j = i + 1; j < nodes.length; j++) {
+          if (nodes[i].position.distanceTo(nodes[j].position) < 15) {
+            positions.push(
+              nodes[i].position.x, nodes[i].position.y, nodes[i].position.z,
+              nodes[j].position.x, nodes[j].position.y, nodes[j].position.z
+            );
+          }
+        }
+      }
+      lineGeometry.setAttribute('position', new THREE.Float32BufferAttribute(positions, 3));
+      const lines = new THREE.LineSegments(lineGeometry, lineMaterial);
+      scene.add(lines);
+    }
+    connectNodes();
+
+    // Camera Movement on Scroll
+    function moveCamera() {
+      const t = document.body.getBoundingClientRect().top;
+      camera.position.z = 30 + t * -0.01;
+      camera.position.x = t * -0.002;
+      camera.rotation.y = t * -0.002;
+    }
+
+    document.body.onscroll = moveCamera;
+
+    // Animation Loop
+    function animate() {
+      requestAnimationFrame(animate);
+      scene.rotation.y += 0.002; // Rotate the scene for a dynamic effect
+      renderer.render(scene, camera);
+    }
+
+    animate();
+
+    // Entrance Animation
+    camera.position.z = 150; // Start further away
+    const entranceAnimation = () => {
+      if (camera.position.z > 30) {
+        camera.position.z -= 0.5; // Slow and smooth zoom-in
+        requestAnimationFrame(entranceAnimation);
+      }
+    };
+    entranceAnimation();
+
+    AOS.init({
+      easing: 'ease-in-out',
+      duration: 1000,
+      once: true, // Animations occur only once
+    });
+
+    // Hamburger Menu Toggle Script
+    const hamburger = document.querySelector('.hamburger');
+    const navbar = document.querySelector('.navbar');
+
+    hamburger.addEventListener('click', () => {
+      navbar.classList.toggle('active');
+    });
+
+    // Adjust canvas on resize
+    window.addEventListener('resize', () => {
+      camera.aspect = window.innerWidth / window.innerHeight;
+      camera.updateProjectionMatrix();
+      renderer.setSize(window.innerWidth, window.innerHeight);
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Contact Us - Gen-T</title>
+  <style>
+    /* General Reset */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: #1a1a1a;
+      color: #fff;
+      overflow-x: hidden;
+    }
+
+    /* Navbar Styles */
+    .navbar {
+      position: fixed;
+      top: 0;
+      width: 100%;
+      background: rgba(26, 26, 26, 0.9);
+      color: #fff;
+      z-index: 1000;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    }
+
+    .navbar-container {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 10px 20px;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .logo {
+      font-size: 1.5rem;
+      font-weight: bold;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      color: #fff;
+      text-decoration: none;
+    }
+
+    .navbar-links {
+      display: flex;
+      gap: 20px;
+    }
+
+    .nav-link {
+      text-decoration: none;
+      color: #fff;
+      font-size: 1rem;
+    }
+
+    /* Hero Section */
+    .hero {
+      height: 60vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-end;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+      padding-bottom: 50px; /* Added space below the particles */
+    }
+
+    canvas {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: -1;
+    }
+
+    .hero h1 {
+      font-size: 3rem;
+      margin: 0;
+      margin-top: 20px; /* Space above Contact Us */
+      color: #fff;
+      text-shadow: 0 2px 5px rgba(0, 0, 0, 0.7);
+      z-index: 2;
+      position: relative;
+    }
+
+    /* Contact Section */
+    .contact-section {
+      padding: 50px 20px;
+      background: #222;
+      text-align: center;
+    }
+
+    .contact-section h2 {
+      font-size: 2rem;
+      margin-bottom: 20px;
+      color: #fff;
+    }
+
+    .contact-section form {
+      max-width: 600px;
+      margin: 0 auto;
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+    }
+
+    .contact-section input,
+    .contact-section textarea {
+      width: 100%;
+      padding: 10px;
+      border: none;
+      border-radius: 5px;
+      background: #333;
+      color: #fff;
+      font-size: 1rem;
+    }
+
+    .contact-section button {
+      padding: 10px;
+      border: none;
+      border-radius: 5px;
+      background: #6a11cb;
+      color: #fff;
+      font-size: 1rem;
+      cursor: pointer;
+    }
+
+    .contact-section button:hover {
+      background: #4e0f94;
+    }
+
+    /* Footer */
+    footer {
+      background: #333;
+      color: #fff;
+      text-align: center;
+      padding: 20px;
+    }
+  </style>
+</head>
+<body>
+  <!-- Navbar -->
+  <nav class="navbar">
+    <div class="navbar-container">
+      <a href="#" class="logo">Gen-T AI Solutions</a>
+      <div class="navbar-links">
+        <a href="index.html" class="nav-link">Home</a>
+        <a href="aboutus.html" class="nav-link">About Us</a>
+        <a href="projects.html" class="nav-link">Projects</a>
+        <a href="contact.html" class="nav-link">Contact</a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Hero Section -->
+  <div class="hero">
+    <canvas id="bg"></canvas>
+    <h1>Contact Us</h1>
+  </div>
+
+  <!-- Contact Section -->
+  <section class="contact-section">
+    <h2>Get in Touch</h2>
+    <form>
+      <input type="text" placeholder="Your Name" required />
+      <input type="email" placeholder="Your Email" required />
+      <textarea rows="5" placeholder="Your Message" required></textarea>
+      <button type="submit">Send Message</button>
+    </form>
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    <p>&copy; 2024 Gen-T. All Rights Reserved.</p>
+  </footer>
+
+  <!-- Scatter to Shape Animation -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+  <script>
+    const scene = new THREE.Scene();
+    const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+    const renderer = new THREE.WebGLRenderer({ canvas: document.querySelector('#bg') });
+    renderer.setSize(window.innerWidth, window.innerHeight);
+    renderer.setPixelRatio(window.devicePixelRatio);
+
+    const particles = [];
+    const scatterPositions = [];
+    const targetPositions = [];
+
+    const adjustScale = () => {
+      return window.innerWidth > 768 ? 20 : 15; // Larger scale for wider screens
+    };
+
+    // Create random particles
+    for (let i = 0; i < 10000; i++) { 
+      const x = Math.random() * 20 - 10;
+      const y = Math.random() * 10 - 5;
+      const z = Math.random() * 10 - 5;
+      scatterPositions.push(x, y, z);
+
+      const particle = new THREE.Vector3(x, y, z);
+      particles.push(particle);
+    }
+
+    // Define target positions for the word "Gen-T AI Solutions"
+    const textCanvas = document.createElement('canvas');
+    const textContext = textCanvas.getContext('2d');
+    textCanvas.width = 600; 
+    textCanvas.height = 150; 
+    textContext.fillStyle = '#fff';
+    textContext.font = '60px Arial';
+    textContext.fillText('Gen-T AI Solutions', 50, 100);
+
+    const imageData = textContext.getImageData(0, 0, textCanvas.width, textCanvas.height).data;
+    const scaleFactor = adjustScale();
+
+    for (let y = 0; y < textCanvas.height; y++) {
+      for (let x = 0; x < textCanvas.width; x++) {
+        const alpha = imageData[(y * textCanvas.width + x) * 4 + 3];
+        if (alpha > 0) {
+          targetPositions.push(
+            (x / scaleFactor) - 15,
+            -(y / scaleFactor) + 5,
+            0
+          );
+        }
+      }
+    }
+
+    const geometry = new THREE.BufferGeometry().setFromPoints(particles);
+    const material = new THREE.PointsMaterial({ color: 0xffffff, size: 0.1 });
+    const pointCloud = new THREE.Points(geometry, material);
+    scene.add(pointCloud);
+
+    camera.position.z = 25;
+
+    let progress = 0;
+
+    function animate() {
+      requestAnimationFrame(animate);
+      progress = Math.min(progress + 0.005, 1);
+
+      const positions = pointCloud.geometry.attributes.position.array;
+      for (let i = 0; i < particles.length; i++) {
+        const targetIndex = Math.floor(i % targetPositions.length);
+        positions[i * 3] = scatterPositions[i * 3] + (targetPositions[targetIndex * 3] - scatterPositions[i * 3]) * progress;
+        positions[i * 3 + 1] = scatterPositions[i * 3 + 1] + (targetPositions[targetIndex * 3 + 1] - scatterPositions[i * 3 + 1]) * progress;
+        positions[i * 3 + 2] = scatterPositions[i * 3 + 2] + (targetPositions[targetIndex * 3 + 2] - scatterPositions[i * 3 + 2]) * progress;
+      }
+
+      pointCloud.geometry.attributes.position.needsUpdate = true;
+      renderer.render(scene, camera);
+    }
+
+    animate();
+
+    window.addEventListener('resize', () => {
+      camera.aspect = window.innerWidth / window.innerHeight;
+      camera.updateProjectionMatrix();
+      renderer.setSize(window.innerWidth, window.innerHeight);
+    });
+  </script>
+</body>
+</html>
